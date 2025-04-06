@@ -12,8 +12,12 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
+// Registers MediatR and automatically scans the assembly containing GetActivityList.Handler
+// to register all request handlers, pipeline behaviors, and notifications.
+// This simplifies dependency injection setup by avoiding manual handler registration.
 builder.Services.AddMediatR(x =>
     x.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>());
+    
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
