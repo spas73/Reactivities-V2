@@ -3,12 +3,15 @@ using Application.Activities.Commands;
 using Application.Activities.DTOs;
 using Application.Activities.Queries;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+
 public class ActivitiesController : BaseApiController
 {
+  
     [HttpGet]
     public async Task<ActionResult<List<Activity>>> GetActivities()
     {
@@ -18,7 +21,7 @@ public class ActivitiesController : BaseApiController
     [HttpGet("{id}")]
     public async Task<ActionResult<Activity>> GetActivityDetail(string id)
     {
-        
+
         return HandleResult(await Mediator.Send(new GetActivityDetails.Query { Id = id }));
     }
 
